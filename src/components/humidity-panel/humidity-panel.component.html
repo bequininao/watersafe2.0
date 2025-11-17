@@ -1,5 +1,8 @@
 <div class="bg-gray-800/50 ring-1 ring-white/10 rounded-xl p-6 shadow-lg h-full flex flex-col">
-  <h3 class="text-lg font-medium text-white mb-4">Niveles de Humedad</h3>
+  <div class="flex items-center justify-between mb-4">
+    <h3 class="text-lg font-medium text-white">Niveles de Humedad</h3>
+    <img src="https://media.giphy.com/media/KYBleS2u91gqI/giphy.gif" alt="Squirtle" class="h-10 w-10">
+  </div>
   <div class="flex-grow space-y-4 pr-2 -mr-2 overflow-y-auto">
     @for (sensor of sensors(); track sensor.id) {
       <div class="flex items-center justify-between p-2 rounded-lg">
