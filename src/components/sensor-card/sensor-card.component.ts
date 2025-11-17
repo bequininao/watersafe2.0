@@ -2,11 +2,12 @@
 import { Component, ChangeDetectionStrategy, input, computed, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Sensor } from '../../services/sensor-data.service';
+import { HistoryChartComponent } from '../history-chart/history-chart.component';
 
 @Component({
   selector: 'app-sensor-card',
   templateUrl: './sensor-card.component.html',
-  imports: [CommonModule],
+  imports: [CommonModule, HistoryChartComponent],
 })
 export class SensorCardComponent {
   sensor = input.required<Sensor>();

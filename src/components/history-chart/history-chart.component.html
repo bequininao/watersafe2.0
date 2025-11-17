@@ -1,0 +1,16 @@
+@if (sensor().history().length > 1) {
+    <svg [attr.viewBox]="viewBox()" class="w-full h-12" preserveAspectRatio="none">
+        <path 
+            [attr.d]="pathData()" 
+            [attr.stroke]="strokeColor()" 
+            [attr.stroke-width]="strokeWidth" 
+            fill="none" 
+            stroke-linecap="round" 
+            stroke-linejoin="round">
+        </path>
+    </svg>
+} @else {
+    <div class="w-full h-12 flex items-center justify-center">
+        <p class="text-xs text-gray-500">Recopilando historial...</p>
+    </div>
+}

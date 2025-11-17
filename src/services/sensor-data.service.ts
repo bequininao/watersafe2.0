@@ -8,6 +8,7 @@ export interface Sensor {
   unit: '°C' | '%';
   status: WritableSignal<'OK' | 'WARNING' | 'ERROR'>;
   normalRange: [number, number];
+  history: WritableSignal<number[]>;
 }
 
 @Injectable({
@@ -15,14 +16,14 @@ export interface Sensor {
 })
 export class SensorDataService {
   sensors: WritableSignal<Sensor[]> = signal([
-    { id: 'temp-gh-tomato', name: 'Invernadero Tomates', type: 'temperature', value: signal(24.5), unit: '°C', status: signal('OK'), normalRange: [21, 27] },
-    { id: 'hum-gh-tomato', name: 'Humedad Invernadero', type: 'humidity', value: signal(65), unit: '%', status: signal('OK'), normalRange: [60, 70] },
-    { id: 'temp-field-corn', name: 'Campo de Maíz', type: 'temperature', value: signal(26.1), unit: '°C', status: signal('OK'), normalRange: [18, 32] },
-    { id: 'hum-soil-corn', name: 'Humedad Suelo Maíz', type: 'humidity', value: signal(62), unit: '%', status: signal('OK'), normalRange: [50, 75] },
-    { id: 'temp-silo', name: 'Silo de Grano', type: 'temperature', value: signal(15.0), unit: '°C', status: signal('OK'), normalRange: [10, 20] },
-    { id: 'hum-silo', name: 'Humedad Silo', type: 'humidity', value: signal(14), unit: '%', status: signal('OK'), normalRange: [12, 15] },
-    { id: 'temp-gh-lettuce', name: 'Invernadero Lechugas', type: 'temperature', value: signal(19.5), unit: '°C', status: signal('OK'), normalRange: [15, 21] },
-    { id: 'temp-vineyard', name: 'Viñedo', type: 'temperature', value: signal(25.5), unit: '°C', status: signal('WARNING'), normalRange: [15, 25] },
+    { id: 'temp-gh-tomato', name: 'Invernadero Tomates', type: 'temperature', value: signal(24.5), unit: '°C', status: signal('OK'), normalRange: [21, 27], history: signal([]) },
+    { id: 'hum-gh-tomato', name: 'Humedad Invernadero', type: 'humidity', value: signal(65), unit: '%', status: signal('OK'), normalRange: [60, 70], history: signal([]) },
+    { id: 'temp-field-corn', name: 'Campo de Maíz', type: 'temperature', value: signal(26.1), unit: '°C', status: signal('OK'), normalRange: [18, 32], history: signal([]) },
+    { id: 'hum-soil-corn', name: 'Humedad Suelo Maíz', type: 'humidity', value: signal(62), unit: '%', status: signal('OK'), normalRange: [50, 75], history: signal([]) },
+    { id: 'temp-silo', name: 'Silo de Grano', type: 'temperature', value: signal(15.0), unit: '°C', status: signal('OK'), normalRange: [10, 20], history: signal([]) },
+    { id: 'hum-silo', name: 'Humedad Silo', type: 'humidity', value: signal(14), unit: '%', status: signal('OK'), normalRange: [12, 15], history: signal([]) },
+    { id: 'temp-gh-lettuce', name: 'Invernadero Lechugas', type: 'temperature', value: signal(19.5), unit: '°C', status: signal('OK'), normalRange: [15, 21], history: signal([]) },
+    { id: 'temp-vineyard', name: 'Viñedo', type: 'temperature', value: signal(25.5), unit: '°C', status: signal('WARNING'), normalRange: [15, 25], history: signal([]) },
   ]);
 
   constructor() {
@@ -48,6 +49,13 @@ export class SensorDataService {
             const change = (Math.random() - 0.5) * (sensor.type === 'temperature' ? 0.5 : 2);
             const newValue = parseFloat((sensor.value() + change).toFixed(1));
             sensor.value.set(newValue);
+
+            // Update history
+            sensor.history.update(currentHistory => {
+              const newHistory = [...currentHistory, newValue];
+              // Keep the last 30 data points for the chart
+              return newHistory.slice(-30);
+            });
 
             // Update status based on value
             const [min, max] = sensor.normalRange;
