@@ -1,0 +1,5 @@
+{
+  "name": "Monitor de Cultivos",
+  "description": "Un panel moderno para monitorear datos de sensores de temperatura y humedad en sus cultivos, invernaderos y silos, proporcionando notificaciones instantáneas sobre fallos o anomalías.",
+  "requestFramePermissions": []
+}

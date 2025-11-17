@@ -1,0 +1,17 @@
+<div class="bg-red-900/50 border border-red-700 text-red-200 px-4 py-3 rounded-lg relative mb-6" role="alert">
+  <div class="flex items-start">
+    <div class="py-1">
+      <svg class="fill-current h-6 w-6 text-red-400 mr-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+        <path d="M10 0a10 10 0 1 0 10 10A10 10 0 0 0 10 0zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm-1-11a1 1 0 0 1 2 0v4a1 1 0 0 1-2 0V7zm0 6a1 1 0 1 1 2 0 1 1 0 0 1-2 0z"/>
+      </svg>
+    </div>
+    <div>
+      <strong class="font-bold">¡Alerta de Fallo de Sensor!</strong>
+      <ul class="list-disc pl-5 mt-1">
+        @for (notification of notifications(); track notification.id) {
+          <li>El sensor '{{ notification.name }}' no está respondiendo. Por favor, revise el hardware.</li>
+        }
+      </ul>
+    </div>
+  </div>
+</div>

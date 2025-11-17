@@ -1,0 +1,39 @@
+<div class="bg-gray-800/50 ring-1 ring-white/10 rounded-xl p-6 shadow-lg h-full flex flex-col">
+  <h3 class="text-lg font-medium text-white mb-4">Niveles de Humedad</h3>
+  <div class="flex-grow space-y-4 pr-2 -mr-2 overflow-y-auto">
+    @for (sensor of sensors(); track sensor.id) {
+      <div class="flex items-center justify-between p-2 rounded-lg">
+        
+        <!-- Sensor Name -->
+        <span class="font-medium text-white w-2/5 truncate" title="{{ sensor.name }}">{{ sensor.name }}</span>
+        
+        <!-- Humidity Visualization -->
+        <div class="w-1/5 flex justify-center">
+            <div class="h-20 w-12 bg-gray-700/50 rounded-lg relative overflow-hidden border-2 border-gray-700/80">
+                <!-- Water Fill -->
+                <div
+                  class="absolute bottom-0 w-full bg-cyan-500/80 transition-all duration-500 ease-in-out"
+                  [style.height.%]="sensor.value()">
+                  <div class="wave" style="background: #06b6d4; opacity: 0.5; animation-duration: 7s;"></div>
+                  <div class="wave" style="background: #22d3ee; opacity: 0.3; animation-duration: 5s; animation-direction: reverse;"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Humidity Value -->
+        <div class="w-2/5 text-right">
+          @if(sensor.status() === 'ERROR') {
+              <span class="font-bold text-lg text-red-400">FALLO</span>
+          } @else {
+              <span class="font-bold text-xl text-white">{{ sensor.value() | number:'1.0-1' }}%</span>
+          }
+        </div>
+
+      </div>
+    } @empty {
+        <div class="flex items-center justify-center h-full text-gray-500">
+            <p>No hay sensores de humedad.</p>
+        </div>
+    }
+  </div>
+</div>
