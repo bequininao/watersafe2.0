@@ -12,21 +12,17 @@ import { HistoryChartComponent } from '../history-chart/history-chart.component'
 export class SensorCardComponent {
   sensor = input.required<Sensor>();
 
-  statusClasses: Signal<{ [key: string]: boolean }> = computed(() => {
+  statusClasses: Signal<string> = computed(() => {
     const status = this.sensor().status();
-    return {
-      'bg-green-500/10 text-green-400 ring-green-500/20': status === 'OK',
-      'bg-yellow-500/10 text-yellow-400 ring-yellow-500/20': status === 'WARNING',
-      'bg-red-500/10 text-red-400 ring-red-500/20 animate-pulse': status === 'ERROR',
-    };
-  });
-
-  statusTextClasses: Signal<{ [key: string]: boolean }> = computed(() => {
-    const status = this.sensor().status();
-    return {
-      'text-green-400': status === 'OK',
-      'text-yellow-400': status === 'WARNING',
-      'text-red-400': status === 'ERROR',
-    };
+    switch (status) {
+      case 'OK':
+        return 'bg-green-100 dark:bg-green-500/10 text-green-700 dark:text-green-400 ring-green-600/20 dark:ring-green-500/20';
+      case 'WARNING':
+        return 'bg-yellow-100 dark:bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 ring-yellow-600/20 dark:ring-yellow-500/20';
+      case 'ERROR':
+        return 'bg-red-100 dark:bg-red-500/10 text-red-800 dark:text-red-400 ring-red-600/20 dark:ring-red-500/20 animate-pulse';
+      default:
+        return '';
+    }
   });
 }

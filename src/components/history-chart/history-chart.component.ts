@@ -13,13 +13,9 @@ export class HistoryChartComponent {
   // SVG dimensions
   private width = 100;
   private height = 40;
-  private strokeWidth = 2;
+  strokeWidth = 2;
 
   viewBox: Signal<string> = computed(() => `0 0 ${this.width} ${this.height}`);
-
-  strokeColor: Signal<string> = computed(() => {
-    return this.sensor().type === 'temperature' ? '#60a5fa' /* blue-400 */ : '#22d3ee' /* cyan-400 */;
-  });
 
   pathData: Signal<string> = computed(() => {
     const history = this.sensor().history();

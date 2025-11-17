@@ -1,8 +1,10 @@
-<main class="min-h-screen p-4 sm:p-6 lg:p-8">
+<main class="min-h-screen p-4 sm:p-6 lg:p-8 transition-colors duration-300">
   <div class="max-w-7xl mx-auto">
-    <header class="mb-8">
-      <h1 class="text-4xl font-bold text-white tracking-tight">Monitor de Cultivos</h1>
-      <p class="mt-2 text-lg text-gray-400">Monitoreo en tiempo real de las condiciones de sus cultivos.</p>
+    <header class="mb-8 flex justify-between items-center">
+      <div>
+        <h1 class="text-4xl font-bold text-gray-900 dark:text-white tracking-tight">Monitor de Cultivos</h1>
+        <p class="mt-2 text-lg text-gray-600 dark:text-gray-400">Monitoreo en tiempo real de las condiciones de sus cultivos.</p>
+      </div>
     </header>
 
     @if (errorNotifications().length > 0) {
@@ -20,8 +22,9 @@
       @for (sensor of sensors(); track sensor.id) {
         <app-sensor-card [sensor]="sensor"></app-sensor-card>
       } @empty {
-        <p class="text-gray-500 col-span-full text-center py-12">No hay datos de sensores disponibles. Inicializando...</p>
+        <p class="text-gray-500 dark:text-gray-400 col-span-full text-center py-12">No hay datos de sensores disponibles. Inicializando...</p>
       }
     </div>
   </div>
+  <app-customization-panel></app-customization-panel>
 </main>

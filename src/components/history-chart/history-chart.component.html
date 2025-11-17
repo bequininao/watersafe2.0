@@ -2,7 +2,7 @@
     <svg [attr.viewBox]="viewBox()" class="w-full h-12" preserveAspectRatio="none">
         <path 
             [attr.d]="pathData()" 
-            [attr.stroke]="strokeColor()" 
+            stroke="var(--accent-500)" 
             [attr.stroke-width]="strokeWidth" 
             fill="none" 
             stroke-linecap="round" 
@@ -11,6 +11,6 @@
     </svg>
 } @else {
     <div class="w-full h-12 flex items-center justify-center">
-        <p class="text-xs text-gray-500">Recopilando historial...</p>
+        <p class="text-xs text-gray-500 dark:text-gray-400">Recopilando historial...</p>
     </div>
 }

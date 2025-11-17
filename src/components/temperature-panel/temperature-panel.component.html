@@ -1,6 +1,6 @@
-<div class="bg-gray-800/50 ring-1 ring-white/10 rounded-xl p-6 shadow-lg h-full flex flex-col">
+<div class="bg-white dark:bg-gray-800/50 ring-1 ring-gray-200 dark:ring-white/10 rounded-xl p-6 shadow-lg dark:shadow-black/20 h-full flex flex-col">
   <div class="flex items-center justify-between mb-4">
-    <h3 class="text-lg font-medium text-white">Temperaturas Clave</h3>
+    <h3 class="text-lg font-medium text-gray-900 dark:text-white">Temperaturas Clave</h3>
     <img src="https://66.media.tumblr.com/tumblr_ma0tijLFPg1rfjowdo1_500.gif" alt="Charmander" class="h-12 w-12">
   </div>
   <div class="flex-grow space-y-5 pr-2 -mr-2 overflow-y-auto">
@@ -8,12 +8,12 @@
       <div class="flex items-center justify-between p-2 rounded-lg">
         
         <!-- Sensor Name -->
-        <span class="font-medium text-white w-2/5 truncate" title="{{ sensor.name }}">{{ sensor.name }}</span>
+        <span class="font-medium text-gray-800 dark:text-white w-2/5 truncate" title="{{ sensor.name }}">{{ sensor.name }}</span>
         
         <!-- Thermometer Visualization -->
         <div class="w-1/5 flex justify-center">
             <div class="h-24 w-6 flex items-end justify-center">
-                <div class="w-4 h-full bg-gray-700/50 rounded-full relative">
+                <div class="w-4 h-full bg-gray-200 dark:bg-gray-700/50 rounded-full relative">
                     <!-- Liquid Fill -->
                     <div
                       class="absolute bottom-0 w-full rounded-full transition-all duration-500 ease-in-out"
@@ -22,7 +22,7 @@
                     </div>
                     <!-- Bulb -->
                     <div
-                      class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full border-2 border-gray-700/50"
+                      class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full border-2 border-gray-200 dark:border-gray-700/50"
                       [style.background]="getTemperatureLiquidColor(sensor.value())">
                     </div>
                 </div>
@@ -32,15 +32,15 @@
         <!-- Temperature Value -->
         <div class="w-2/5 text-right">
           @if(sensor.status() === 'ERROR') {
-              <span class="font-bold text-lg text-red-400">FALLO</span>
+              <span class="font-bold text-lg text-red-600 dark:text-red-400">FALLO</span>
           } @else {
-              <span class="font-bold text-xl text-white">{{ sensor.value() | number:'1.0-1' }}°C</span>
+              <span class="font-bold text-xl text-gray-900 dark:text-white">{{ sensor.value() | number:'1.0-1' }}°C</span>
           }
         </div>
 
       </div>
     } @empty {
-        <div class="flex items-center justify-center h-full text-gray-500">
+        <div class="flex items-center justify-center h-full text-gray-500 dark:text-gray-400">
             <p>No hay sensores de temperatura.</p>
         </div>
     }

@@ -5,15 +5,19 @@ import { SensorCardComponent } from './components/sensor-card/sensor-card.compon
 import { NotificationPanelComponent } from './components/notification-panel/notification-panel.component';
 import { TemperaturePanelComponent } from './components/temperature-panel/temperature-panel.component';
 import { HumidityPanelComponent } from './components/humidity-panel/humidity-panel.component';
+import { ThemeService } from './services/theme.service';
+import { CustomizationPanelComponent } from './components/customization-panel/customization-panel.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, SensorCardComponent, NotificationPanelComponent, TemperaturePanelComponent, HumidityPanelComponent],
+  imports: [CommonModule, SensorCardComponent, NotificationPanelComponent, TemperaturePanelComponent, HumidityPanelComponent, CustomizationPanelComponent],
 })
 export class AppComponent {
   private sensorDataService = inject(SensorDataService);
+  // Initialize the theme service to load the user's preference
+  private themeService = inject(ThemeService);
 
   sensors: Signal<Sensor[]> = this.sensorDataService.sensors;
 
