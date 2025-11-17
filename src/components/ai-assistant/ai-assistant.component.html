@@ -1,0 +1,61 @@
+<div class="bg-white dark:bg-gray-800/50 ring-1 ring-gray-200 dark:ring-white/10 rounded-xl p-6 shadow-lg dark:shadow-black/20 h-full flex flex-col">
+  <div class="flex items-center justify-between mb-4">
+    <h3 class="text-lg font-medium text-gray-900 dark:text-white">Asistente de Cultivo IA</h3>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[var(--accent-500)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.562L16.25 22.25l-.648-1.688a3.375 3.375 0 00-2.456-2.456L11.25 18l1.688-.648a3.375 3.375 0 002.456-2.456L16.25 13l.648 1.688a3.375 3.375 0 002.456 2.456L21 18l-1.688.648a3.375 3.375 0 00-2.456 2.456z" />
+    </svg>
+  </div>
+  
+  @if (isServiceConfigured) {
+    <div class="flex-grow flex flex-col justify-between">
+      @switch (aiState()) {
+        @case ('idle') {
+          <p class="text-gray-600 dark:text-gray-400 text-sm">
+            @if (sensors().length > 0) {
+              Se han detectado {{ sensors().length }} problema(s) en los sensores. Obtenga un análisis y recomendaciones de la IA.
+            } @else {
+              Todos los sensores funcionan correctamente. ¡Buen trabajo!
+            }
+          </p>
+        }
+        @case ('loading') {
+          <div class="flex items-center justify-center flex-grow">
+            <svg class="animate-spin h-8 w-8 text-[var(--accent-500)]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span class="ml-3 text-gray-600 dark:text-gray-400">Analizando...</span>
+          </div>
+        }
+        @case ('success') {
+          <div class="text-sm text-gray-700 dark:text-gray-300 space-y-2 overflow-y-auto max-h-48 pr-2 -mr-2" [innerHTML]="recommendation()"></div>
+        }
+        @case ('error') {
+          <p class="text-red-600 dark:text-red-400" [innerHTML]="recommendation()"></p>
+        }
+      }
+
+      <div class="mt-4">
+        <button 
+          (click)="getRecommendation()" 
+          [disabled]="aiState() === 'loading' || sensors().length === 0"
+          class="w-full bg-[var(--accent-500)] text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200 hover:bg-[var(--accent-400)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-900 focus:ring-[var(--accent-500)] disabled:bg-gray-400 dark:disabled:bg-gray-600 disabled:cursor-not-allowed">
+            @if (aiState() === 'loading') {
+              <span>Procesando...</span>
+            } @else if (aiState() === 'success') {
+              <span>Obtener Nuevo Análisis</span>
+            } @else {
+              <span>Analizar y Recomendar</span>
+            }
+        </button>
+      </div>
+    </div>
+  } @else {
+    <div class="flex-grow flex items-center justify-center">
+      <div class="text-center text-sm text-yellow-700 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-900/30 p-4 rounded-lg">
+        <p>El servicio de Asistente de IA no está configurado.</p>
+        <p class="font-semibold mt-1">Por favor, configure una API Key para habilitarlo.</p>
+      </div>
+    </div>
+  }
+</div>

@@ -11,10 +11,13 @@
       <app-notification-panel [notifications]="errorNotifications()"></app-notification-panel>
     }
 
-    <section class="mb-8">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <section class="mb-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
         <app-temperature-panel [sensors]="temperatureSensors()"></app-temperature-panel>
         <app-humidity-panel [sensors]="humiditySensors()"></app-humidity-panel>
+      </div>
+      <div class="lg:col-span-1">
+        <app-ai-assistant [sensors]="problematicSensors()"></app-ai-assistant>
       </div>
     </section>
 

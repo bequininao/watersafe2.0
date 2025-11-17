@@ -7,12 +7,13 @@ import { TemperaturePanelComponent } from './components/temperature-panel/temper
 import { HumidityPanelComponent } from './components/humidity-panel/humidity-panel.component';
 import { ThemeService } from './services/theme.service';
 import { CustomizationPanelComponent } from './components/customization-panel/customization-panel.component';
+import { AiAssistantComponent } from './components/ai-assistant/ai-assistant.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, SensorCardComponent, NotificationPanelComponent, TemperaturePanelComponent, HumidityPanelComponent, CustomizationPanelComponent],
+  imports: [CommonModule, SensorCardComponent, NotificationPanelComponent, TemperaturePanelComponent, HumidityPanelComponent, CustomizationPanelComponent, AiAssistantComponent],
 })
 export class AppComponent {
   private sensorDataService = inject(SensorDataService);
@@ -31,5 +32,9 @@ export class AppComponent {
 
   errorNotifications: Signal<Sensor[]> = computed(() =>
     this.sensors().filter((sensor) => sensor.status() === 'ERROR')
+  );
+
+  problematicSensors: Signal<Sensor[]> = computed(() =>
+    this.sensors().filter((sensor) => sensor.status() === 'WARNING' || sensor.status() === 'ERROR')
   );
 }

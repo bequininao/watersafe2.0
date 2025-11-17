@@ -61,9 +61,8 @@ export class ThemeService {
           localStorage.setItem('theme', newTheme);
           localStorage.setItem('accentColor', newAccent);
         } catch (e) {
-          // Fix: Use a format specifier to safely log the unknown error object.
-          // This satisfies strict type checking while preserving object inspectability in the console.
-          console.error('Failed to save theme to localStorage: %o', e);
+          // Fix: Log the unknown error object safely as a separate argument to console.error.
+          console.error('Failed to save theme to localStorage:', e);
         }
       }
     });
